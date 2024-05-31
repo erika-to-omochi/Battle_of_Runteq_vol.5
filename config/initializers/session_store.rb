@@ -1,0 +1,1 @@
+Rails.application.config.session_store :cookie_store, key: '_Battle_of_Runteq_vol_5_session'

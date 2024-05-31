@@ -1,0 +1,7 @@
+yarn run v1.22.22
+$ esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets
+
+  app/assets/builds/application.js      261.5kb
+  app/assets/builds/application.js.map  481.2kb
+
+Done in 0.16s.

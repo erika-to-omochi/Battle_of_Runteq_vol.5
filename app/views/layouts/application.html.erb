@@ -17,14 +17,7 @@
     <% else %>
       <%= render 'shared/before_login_header' %>
     <% end %>
-    <% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-  <% end %>
-  
-  <% if flash[:alert] %>
-    <div class="alert"><%= flash[:alert] %></div>
-  <% end %>
-  
+       <%= render 'shared/flash_message' %>
       <%= yield %>
       <%= render 'shared/footer' %>
   </body>

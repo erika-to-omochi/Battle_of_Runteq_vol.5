@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'games/shooting'
   resources :users, only: %i[index new create]
   root "static_pages#top"
   get 'login', to: 'user_sessions#new'

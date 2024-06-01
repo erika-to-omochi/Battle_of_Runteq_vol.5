@@ -1,0 +1,22 @@
+databases:
+  - name: Battle_of_Runteq_vol5_DB
+    databaseName: battle_of_runteq_vol5_db
+    user: Battle_of_Runteq_vol5
+    region: singapore
+
+services:
+  - type: web
+    name: Battle_of_Runteq_vol5
+    env: ruby
+    region: singapore
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: Battle_of_Runteq_vol5_DB
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+

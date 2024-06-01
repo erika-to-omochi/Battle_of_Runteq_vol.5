@@ -723,7 +723,7 @@ es-module-lexer@^1.2.1:
 
 esbuild@^0.21.4:
   version "0.21.4"
-  resolved "https://registry.npmjs.org/esbuild/-/esbuild-0.21.4.tgz"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.21.4.tgz#ceb501def8edb12a5bfd9c55f3a96db698edf022"
   integrity sha512-sFMcNNrj+Q0ZDolrp5pDhH0nRPN9hLIM3fRPwgbLYJeSHHgnXSnbV3xYgSVuOeLWH9c73VwmEverVzupIv5xuA==
   optionalDependencies:
     "@esbuild/aix-ppc64" "0.21.4"

@@ -5,9 +5,10 @@
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.4",
     "@rails/ujs": "^7.0.8-3",
+    "@rails/webpacker": "5.4.4",
     "esbuild": "^0.21.4",
     "postcss": "^8.4.38",
-    "webpack": "^5.91.0"
+    "style-loader": "4.0.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
@@ -28,7 +29,10 @@
     "css-loader": "^7.1.2",
     "postcss-loader": "^8.1.1",
     "style-loader": "^4.0.0",
-    "tailwindcss": "^3.4.3"
+    "tailwindcss": "^3.4.3",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^3"
   },
   "keywords": [],
   "author": "",

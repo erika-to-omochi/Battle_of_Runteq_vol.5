@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'phina/js'
+  get '/build/phina.js', to: 'phina#js'
   get 'games/shooting'
   resources :users, only: %i[index new create]
   root "static_pages#top"

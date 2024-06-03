@@ -65,7 +65,6 @@ end
 
 gem 'sorcery', '~> 0.16.3'
 gem 'rails-ujs', '~>0.1.0'
-gem 'webpacker', '~> 5.0'
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]

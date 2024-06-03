@@ -1,4 +1,4 @@
-<nav class="flex items-center justify-between flex-wrap bg-gray-100 py-2", style="margin-bottom: 40px">
+<nav class="flex items-center justify-between flex-wrap bg-gray-100 py-2", style="margin-bottom: 80px">
     <%= link_to root_path, class: 'flex items-center flex-shrink-0 text-black mr-6' do %>
       <%= image_tag 'logo.png', class: 'h-32 w-32' %>
     <% end %>
@@ -29,16 +29,19 @@
           <%= link_to '#', class: 'relative px-6 py-2 font-bold text-black group flex flex-col items-center', id: 'header-profile' do %>
             <span class="absolute inset-0 w-full h-full transition duration-300 ease-out transform -translate-x-2 -translate-y-2 bg-red-300 group-hover:translate-x-0 group-hover:translate-y-0"></span>
             <span class="absolute inset-0 w-full h-full border-4 border-black"></span>
-            <span class="relative flex-col items-center"> 
+            <span class="relative flex-col items-center">
               <%= image_tag 'sample.png', class: 'rounded-full w-10 h-10', width: '40', height: '40' %>
             </span>
           <% end %>
           <div class="absolute right-0 hidden mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg group-hover:block">
-            <%= link_to 'プロフィール', '#', class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
-            <%= link_to 'ログアウト', logout_path, method: :delete, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100', data: { turbo_method: :delete } %>
+            <div class='dropdown-menu dropdown-menu-end'>
+              <div class='dropdown-item'><%= current_user.decorate.full_name %></div>
+              <div class='dropdown-divider'></div>
+              <%= link_to 'プロフィール', '#', class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+              <%= link_to 'ログアウト', logout_path, method: :delete, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100', data: { turbo_method: :delete } %>
+            </div>
           </div>
         </li>
-      </ul>
     </div>
   </nav>
 </header>

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'build/phina.js', to: 'phina#js'
   get 'games/shooting'
   resources :users, only: %i[index new create]
+  resources :boards, only: %i[index]
+  get 'boards/index', to: 'boards#index'
   root "static_pages#top"
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'

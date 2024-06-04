@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    errors:
+      models:
+        board:
+          attributes:
+            title:
+              blank: "がないです"
+            body:
+              blank: "がないです"

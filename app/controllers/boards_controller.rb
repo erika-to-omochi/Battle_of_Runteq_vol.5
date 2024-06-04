@@ -14,6 +14,7 @@ class BoardsController < ApplicationController
         redirect_to boards_path, notice: 'Be OPEN ですね⭐'
     else
         flash.now[:alert] = '投稿に失敗しました'
+        render :new, status: :unprocessable_entity
     end
   end
 

@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  skip_before_action :require_login
+  skip_before_action :require_login, only: [:index, :new, :create]
   def index
     @boards = Board.includes(:user).all
   end
@@ -21,6 +21,6 @@ class BoardsController < ApplicationController
   private
 
   def board_params
-    params.require(:board).permit(:title, :body)
+    params.require(:board).permit(:title, :body, :board_image, :board_image_cache)
   end
 end

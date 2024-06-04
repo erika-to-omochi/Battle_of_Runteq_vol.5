@@ -9,7 +9,7 @@
 	</div>
 	<!-- メインの画像と本文 -->
 	<div>
-		<img src="https://source.unsplash.com/random/100x100/?5" alt="" class="object-cover w-full mb-4 h-60 sm:h-96 dark:bg-gray-500">
+	    <%= image_tag(board.board_image.present? ? board.board_image.url : "https://source.unsplash.com/random/100x100/?5", alt: "", class: "object-cover w-full mb-4 h-60 sm:h-96 dark:bg-gray-500") %>
 		<h2 class="mb-1 text-xl font-semibold"><%= board.title %></h2>
 		<p class="text-sm dark:text-gray-600"><%= board.body %></p>
 	</div>

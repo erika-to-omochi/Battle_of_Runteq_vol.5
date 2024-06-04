@@ -1,7 +1,7 @@
 class BoardsController < ApplicationController
   skip_before_action :require_login
   def index
-    @boards = Board.includes(:user)
+    @boards = Board.includes(:user).all
   end
 
   def new

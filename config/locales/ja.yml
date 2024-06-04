@@ -2,9 +2,27 @@ ja:
   activerecord:
     errors:
       models:
+        user:
+          attributes:
+            first_name:
+              blank: "を入力してください"
+              too_long: "が長すぎます（最大 %{count} 文字）"
+            last_name:
+              blank: "を入力してください"
+              too_long: "姓が長すぎます（最大 %{count} 文字）"
+            email:
+              blank: "を入力してください"
+              taken: "このメールアドレスは既に使用されています"
+            password:
+              blank: "を入力してください"
+              too_short: "が短すぎます（最小 %{count} 文字）"
+            password_confirmation:
+              confirmation: "パスワードが一致しません"
         board:
           attributes:
             title:
-              blank: "がないです"
+              blank: "を入力してください"
+              too_long: "が長すぎます（最大 %{count} 文字）"
             body:
-              blank: "がないです"
+              blank: "を入力してください"
+              too_long: "が長すぎます（最大 %{count} 文字）"

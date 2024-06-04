@@ -1,16 +1,19 @@
 <div class="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-50 dark:text-gray-800">
+	<!-- プロフィール画像 -->
 	<div class="flex space-x-4">
 		<img alt="" src="https://source.unsplash.com/100x100/?portrait" class="object-cover w-12 h-12 rounded-full shadow dark:bg-gray-500">
 		<div class="flex flex-col space-y-1">
-			<a rel="noopener noreferrer" href="#" class="text-sm font-semibold">Leroy Jenkins</a>
-			<span class="text-xs dark:text-gray-600">4 hours ago</span>
+			<a rel="noopener noreferrer" href="#" class="text-sm font-semibold"><%= current_user.decorate.full_name %></a>
+			<span class="text-xs dark:text-gray-600"><%= board.created_at.strftime("%Y-%m-%d %H:%M") %></span>
 		</div>
 	</div>
+	<!-- メインの画像と本文 -->
 	<div>
 		<img src="https://source.unsplash.com/random/100x100/?5" alt="" class="object-cover w-full mb-4 h-60 sm:h-96 dark:bg-gray-500">
-		<h2 class="mb-1 text-xl font-semibold">Nam cu platonem posidonium sanctus debitis te</h2>
-		<p class="text-sm dark:text-gray-600">Eu qualisque aliquando mel, id lorem detraxit nec, ad elit minimum pri. Illum ipsum detracto ne cum. Mundi nemore te ius, vim ad illud atqui apeirian...</p>
+		<h2 class="mb-1 text-xl font-semibold"><%= board.title %></h2>
+		<p class="text-sm dark:text-gray-600"><%= board.body %></p>
 	</div>
+
 	<div class="flex flex-wrap justify-between">
 		<div class="space-x-2">
 			<button aria-label="Share this post" type="button" class="p-2 text-center">
@@ -41,34 +44,4 @@
 			</button>
 		</div>
 	</div>
-</div>
-
-  <!-- 掲示板のタイトル・本文・投稿者フルネーム・投稿日時を動的に表示するようになっていること(タイトルのリンクはのちの課題で作成するので仮(#)のままで大丈夫です),>
-  
-
-<div class="col-sm-12 col-lg-4 mb-3">
-  <div id="board-id-<%= board.id %>">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex">
-          <h4 class="card-title">
-            <%= link_to board.title, '#' %>
-          </h4>
-          <div class='ms-auto'>
-            <%= link_to '#', id: 'button-edit-#{board.id}' do %>
-              <i class="bi bi-pencil-fill"></i>
-            <% end %>
-            <%= link_to '#', id: 'button-delete-#{board.id}', method: :delete, data: {confirm: ''} do %>
-              <i class="bi bi-trash-fill"></i>
-            <% end %>
-          </div>
-        </div>
-        <ul class="list-inline">
-          <li><i class="bi bi-person"></i><%= board.user.decorate.full_name %></li>
-          <li><i class="bi bi-calendar"></i><%= l board.created_at, format: :short %></li>
-        </ul>
-        <p class="card-text">本文</p>
-      </div>
-    </div>
-  </div>
 </div>

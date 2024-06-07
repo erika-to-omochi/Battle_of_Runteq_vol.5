@@ -30,9 +30,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_06_081518) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["board_id"], name: "index_comments_on_board_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
-  end
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,6 +46,4 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_06_081518) do
   end
 
   add_foreign_key "boards", "users"
-  add_foreign_key "comments", "boards"
-  add_foreign_key "comments", "users"
 end

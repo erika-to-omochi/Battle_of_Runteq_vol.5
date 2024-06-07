@@ -8,4 +8,9 @@ class User < ApplicationRecord
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
 
   has_many :boards, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
+  def own?(object)
+    id == object&.user_id
+  end  
 end

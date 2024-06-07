@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  skip_before_action :require_login, only: [:index, :new, :create]
+  skip_before_action :require_login, only: [:index, :new, :create, :show]
   def index
     @boards = Board.includes(:user).all
   end
@@ -18,9 +18,15 @@ class BoardsController < ApplicationController
     end
   end
 
+  def show
+    @board = Board.find(params[:id])
+    @comment = Comment.new
+    @comments = @board.comments.includes(:user).order(created_at: :desc)
+  end
+
   private
 
   def board_params
-    params.require(:board).permit(:title, :body, :board_image, :board_image_cache)
+    params.require(:board).permit(:title, :body, :board_image, :board_image_cache, :comment)
   end
 end

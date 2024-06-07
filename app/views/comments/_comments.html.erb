@@ -1,0 +1,27 @@
+<section class="dark:bg-gray-100 dark:text-gray-800">
+  <% @comments.each do |comment| %>
+    <div class="container mx-auto flex flex-col p-0">
+      <div class="divide-y dark:divide-gray-300">
+        <div class="grid justify-center grid-cols-4 p-4 mx-auto space-y-4 lg:space-y-0">
+          <div class="flex items-start justify-start lg:col-span-1 col-span-full">
+            <!-- 左上にコメントした人のアイコンを表示する -->
+            <%= image_tag 'sample.png', class: 'rounded-full w-10 h-10', width: '16', height: '16' %>
+          </div>
+          <div class="flex flex-col justify-start max-w-3xl col-span-full lg:col-span-3 lg:text-left">
+            <!-- 名前と日時を上部に配置 -->
+            <div class="flex items-start">
+              <span class="text-xs font-bold md:text-2xl mr-4"><%= comment.user.decorate.full_name %></span>
+              <span class="text-xs tracking-wider uppercase dark:text-violet-600">
+                <%= comment.created_at.present? ? comment.created_at.strftime("%Y-%m-%d %H:%M") : "日時不明" %>
+              </span>
+            </div>
+            <!-- コメント本文を左に配置し、上下の余白を少なくする -->
+            <span class="mt-1 mb-1 dark:text-gray-700 text-left"><%= comment.body %></span>
+          </div>
+        </div>
+        <!-- 各投稿の間にかわいい線を入れる。余白をなくす -->
+        <div class="border-t border-dashed border-pink-400"></div>
+      </div>
+    </div>
+  <% end %>
+</section>

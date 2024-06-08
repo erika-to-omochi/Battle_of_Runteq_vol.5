@@ -12,4 +12,9 @@ module ApplicationHelper
       else "bg-gray-500"
       end
     end
+
+    def page_title(title)
+      base_title = "恥ずかしさを笑いに！！"
+      title.empty? ? base_title : title + " | " +  base_title
+    end
   end

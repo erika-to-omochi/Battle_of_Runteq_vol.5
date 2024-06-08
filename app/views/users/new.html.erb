@@ -1,3 +1,4 @@
+<% content_for(:title, "ユーザー登録") %>
 <section class="p-6 dark:bg-gray-100 dark:text-gray-900 bg-gray-100">
   <%= form_with model: @user, url: users_path, local: true, class: "container flex flex-col mx-auto space-y-12", data: { turbo: false } do |form| %>
     <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-50">

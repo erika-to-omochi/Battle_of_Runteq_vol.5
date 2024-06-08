@@ -26,9 +26,29 @@ class BoardsController < ApplicationController
     @comment_count = @board.comments.count
   end
 
+  def edit
+    @board = Board.find(params[:id])
+  end
+
+  def update
+    @board = Board.find(params[:id])
+    if @board.update(board_params)
+      redirect_to boards_path, notice: '更新しました⭐'
+    else
+      flash.now[:alert] = '更新に失敗しました'
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @board = Board.find(params[:id])
+    @board.destroy
+    redirect_to boards_path, notice: '削除しました⭐'
+  end
+
   private
 
   def board_params
-    params.require(:board).permit(:title, :body, :board_image, :board_image_cache, :comment)
+    params.require(:board).permit(:title, :body, :board_image, :board_image_cache, :discription)
   end
 end

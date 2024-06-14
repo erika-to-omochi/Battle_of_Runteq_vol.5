@@ -1,23 +1,24 @@
-<header class="bg-gray-100">
-  <nav class="flex justify-between items-center py-4">
-    <div class="flex items-center space-x-2">
-      <%= link_to root_path, class: "navbar-brand" do %>
+<header class="bg-red-300">
+  <nav class="flex justify-between items-center py-2">
+    <div class="flex items-center space-x-2 flex-grow">
+      <%= link_to root_path, class: "navbar-brand flex items-center" do %>
         <%= image_tag "logo.png", class: 'h-32 w-32' %>
+        <div class="text-white ml-2 text-2xl font-bold">HAPPY LUCKY LOVE SMILE PEACE DREAM</div>
       <% end %>
+
+      <div class="hidden lg:flex lg:flex-grow lg:items-center lg:space-x-4" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto main-nav align-items-center">
+          <li class="nav-item">
+            <%= link_to 'ログイン', login_path, class: "nav-link text-white border border-white p-2.5 mr-5 rounded focus:ring-4 focus:ring-red-100" %>
+          </li>
+        </ul>
+      </div>
 
       <button class="block lg:hidden flex items-center px-3 py-2 border rounded text-gray-500 border-gray-400 hover:text-gray-900 hover:border-gray-500 focus:outline-none focus:text-gray-900 focus:border-gray-500" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <svg class="h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
           <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
         </svg>
       </button>
-    </div>
-
-    <div class="hidden lg:flex lg:flex-grow lg:items-center lg:space-x-4" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto main-nav align-items-center">
-        <li class="nav-item">
-          <%= link_to 'ログイン', login_path, class: "nav-link" %>
-        </li>
-      </ul>
     </div>
   </nav>
 </header>

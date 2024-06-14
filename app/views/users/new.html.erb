@@ -1,7 +1,6 @@
-<% content_for(:title, "ユーザー登録") %>
-<section class="p-6 dark:bg-gray-100 dark:text-gray-900">
+<section class="p-6">
   <%= form_with model: @user, url: users_path, local: true, class: "container flex flex-col mx-auto space-y-12", data: { turbo: false } do |form| %>
-    <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-50">
+    <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
       <div class="space-y-2 col-span-full lg:col-span-1">
         <p class="font-medium">ユーザー登録</p>
         <p class="text-xs">ユーザー情報を入力してください</p>
@@ -10,28 +9,28 @@
       <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
         <div class="col-span-full sm:col-span-3">
           <%= form.label :first_name, "名前", class: "text-sm" %>
-          <%= form.text_field :first_name, placeholder: "HISAJU", class: "w-full rounded-md border border-gray-800 px-4 py-2 focus:ring focus:ring-opacity-75 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300" %>
+          <%= form.text_field :first_name, placeholder: "HISAJU", class: "w-full rounded-md border border-gray-300 px-4 py-2 focus:ring focus:ring-opacity-75 focus:ring-violet-600" %>
         </div>
         <div class="col-span-full sm:col-span-3">
           <%= form.label :last_name, "名字", class: "text-sm" %>
-          <%= form.text_field :last_name, placeholder: "KIKUMOTO", class: "w-full rounded-md border border-gray-800 px-4 py-2 focus:ring focus:ring-opacity-75 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300" %>
+          <%= form.text_field :last_name, placeholder: "KIKUMOTO", class: "w-full rounded-md border border-gray-300 px-4 py-2 focus:ring focus:ring-opacity-75 focus:ring-violet-600" %>
         </div>
         <div class="col-span-full sm:col-span-4">
           <%= form.label :email, "メールアドレス", class: "text-sm" %>
-          <%= form.email_field :email, placeholder: "hisaju_love@runteq.com", class: "w-full rounded-md border border-gray-800 px-4 py-2 focus:ring focus:ring-opacity-75 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300" %>
+          <%= form.email_field :email, placeholder: "hisaju_love@runteq.com", class: "w-full rounded-md border border-gray-300 px-4 py-2 focus:ring focus:ring-opacity-75 focus:ring-violet-600" %>
         </div>
         <div class="col-span-full sm:col-span-3">
           <%= form.label :password, "パスワード", class: "text-sm" %>
-          <%= form.password_field :password, placeholder: "Password", class: "w-full rounded-md border border-gray-800 px-4 py-2 focus:ring focus:ring-opacity-75 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300" %>
+          <%= form.password_field :password, placeholder: "Password", class: "w-full rounded-md border border-gray-300 px-4 py-2 focus:ring focus:ring-opacity-75 focus:ring-violet-600" %>
         </div>
         <div class="col-span-full sm:col-span-3">
           <%= form.label :password_confirmation, "パスワード確認", class: "text-sm" %>
-          <%= form.password_field :password_confirmation, placeholder: "Password Confirmation", class: "w-full rounded-md border border-gray-800 px-4 py-2 focus:ring focus:ring-opacity-75 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300" %>
+          <%= form.password_field :password_confirmation, placeholder: "Password Confirmation", class: "w-full rounded-md border border-gray-300 px-4 py-2 focus:ring focus:ring-opacity-75 focus:ring-violet-600" %>
         </div>
       </div>
       <div class="col-span-full flex justify-center space-x-4">
-        <%= link_to 'ログインページへ', login_path, class: 'inline-block px-4 py-2 border border-gray-800 rounded-md dark:border-gray-800 text-center' %>
-        <button type="submit" class="inline-block px-4 py-2 border border-gray-800 rounded-md dark:border-gray-800 text-center">登録</button>
+        <%= link_to 'ログインページへ', login_path, class: 'inline-block px-4 py-2 border border-gray-300 rounded-md text-center' %>
+        <button type="submit" class="inline-block px-4 py-2 border border-gray-300 rounded-md text-center">登録</button>
       </div>
     </fieldset>
   <% end %>

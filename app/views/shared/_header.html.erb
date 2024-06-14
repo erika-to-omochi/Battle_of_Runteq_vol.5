@@ -1,46 +1,45 @@
 <header class="bg-red-300">
-  <nav class="flex items-center justify-between flex-wrap pt-2 pb-20">
+  <nav class="flex items-center justify-between flex-wrap pt-3 pb-3">
     <%= link_to root_path, class: 'flex items-center flex-shrink-0 text-black mr-6' do %>
       <%= image_tag 'logo.png', class: 'h-32 w-32' %>
-      <div class="text-white ml-2 text-2xl font-bold">HAPPY LUCKY LOVE SMILE PEACE DREAM</div>
+      <div class="text-white ml-2 text-3xl font-bold">HAPPY LUCKY LOVE SMILE PEACE DREAM</div>
     <% end %>
     <button class="flex items-center px-3 py-2 border rounded text-gray-700 border-gray-400 hover:text-white hover:border-white lg:hidden focus:ring-4 focus:ring-red-100" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <svg class="fill-current h-5 w-5" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
     </button>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto" id="navbarSupportedContent">
       <ul class="flex flex-col lg:flex-row lg:ml-auto">
-        <li class="relative group">
-
-          <%= link_to '#', class: 'relative px-6 py-2 font-bold text-white group', id: 'header-board-menu' do %>
+        <li class="relative group px-2 py-2">
+          <%= link_to '#', class: 'relative font-bold text-white group p-3', id: 'header-board-menu' do %>
             <span class="absolute inset-0 w-full h-full transition duration-300 ease-out transform -translate-x-2 -translate-y-2 bg-red-300 group-hover:translate-x-0 group-hover:translate-y-0"></span>
             <span class="absolute inset-0 w-full h-full text-white border border-white p-2.5 mr-5 rounded focus:ring-4 focus:ring-red-100"></span>
             <span class="relative">掲示板</span>
           <% end %>
-          
-          <div class="absolute right-0 hidden mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg group-hover:block">
+          <div class="absolute right-0 hidden mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg group-hover:block z-10">
             <%= link_to '掲示板一覧', boards_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
             <%= link_to '掲示板作成', new_board_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
           </div>
         </li>
-        <li class="relative group">
-          <%= link_to '#', class: 'relative px-6 py-2 font-bold text-white group' do %>
+        <li class="relative group px-2 py-2">
+          <%= link_to '#', class: 'relative font-bold text-white group p-3' do %>
             <span class="absolute inset-0 w-full h-full transition duration-300 ease-out transform -translate-x-2 -translate-y-2 bg-red-300 group-hover:translate-x-0 group-hover:translate-y-0"></span>
             <span class="absolute inset-0 w-full h-full text-white border border-white p-2.5 mr-5 rounded focus:ring-4 focus:ring-red-100"></span>
             <span class="relative">ブックマーク一覧</span>
           <% end %>
         </li>
-        <li class="relative group">
-          <%= link_to '#', class: 'relative px-6 py-2 font-bold text-white group flex flex-col items-center', id: 'header-profile' do %>
+        <li class="relative group px-2 mr-6">
+          <%= link_to '#', class: 'relative font-bold text-white group flex items-center p-3', id: 'header-profile' do %>
             <span class="absolute inset-0 w-full h-full transition duration-300 ease-out transform -translate-x-2 -translate-y-2 bg-red-300 group-hover:translate-x-0 group-hover:translate-y-0"></span>
             <span class="absolute inset-0 w-full h-full text-white border border-white p-2.5 mr-5 rounded focus:ring-4 focus:ring-red-100"></span>
-            <span class="relative flex-col items-center">
+            <span class="relative flex items-center">
               <%= image_tag 'sample.png', class: 'rounded-full w-10 h-10', width: '40', height: '40' %>
             </span>
           <% end %>
-          <div class="absolute right-0 hidden mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg group-hover:block">
+          <div class="absolute right-0 hidden mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg group-hover:block z-10">
             <div class='dropdown-menu dropdown-menu-end'>
-              <div class='dropdown-item'><%= current_user.decorate.full_name %></div>
+              <div class='dropdown-item px-4 py-2'><%= current_user.decorate.full_name %></div>
               <div class='dropdown-divider'></div>
+              <hr class="border-gray-200">
               <%= link_to 'プロフィール', '#', class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
               <%= link_to 'ログアウト', logout_path, method: :delete, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100', data: { turbo_method: :delete } %>
             </div>
@@ -50,4 +49,3 @@
     </div>
   </nav>
 </header>
-

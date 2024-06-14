@@ -1,11 +1,11 @@
-<section class="py-6 dark:bg-gray-100 dark:text-gray-900 bg-gray-100">
+<section class="py-6 dark:bg-gray-100 dark:text-gray-900">
   <div class="max-w-6xl mx-auto px-6">
     <%= form_with(model: [@board, @board.comments.build], local: true, class: "flex flex-col py-6 space-y-6") do |form| %>
       <label class="block">
         <span class="mb-1">コメント</span>
-        <%= form.text_area :body, rows: 3, class: "block w-full rounded-md focus:ring focus:ring-opacity-75 focus:dark:ring-violet-600 dark:bg-gray-100" %>
+        <%= form.text_area :body, rows: 3, class: "block w-full rounded-md focus:ring focus:ring-opacity-75 focus:dark:ring-violet-600 dark:bg-gray-100 border border-gray-800" %>
       </label>
-      <%= form.submit "コメントする", class: "self-center px-8 py-3 text-lg rounded focus:ring hover:ring focus:ring-opacity-75 bg-red-300 text-gray-900 focus:bg-red-400 hover:bg-red-400" %>
+      <%= form.submit "コメントする", class: "self-center px-8 py-3 text-lg rounded focus:ring hover:ring focus:ring-opacity-75 bg-red-300 text-white focus:bg-red-400 hover:bg-red-400" %>
     <% end %>
   </div>
 </section>

@@ -1,28 +1,28 @@
 <% content_for(:title, "ログイン") %>
 <div class="flex justify-center items-center">
-    <div class="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-50 dark:text-gray-800">
+    <div class="w-full max-w-md p-8 space-y-3 rounded-xl">
         <h1 class="text-2xl font-bold text-center">ログイン</h1>
         <form novalidate action="/login" method="POST" class="space-y-6">
             <div class="space-y-1 text-sm">
-                <label for="email" class="block dark:text-gray-600">メールアドレス</label>
-                <input type="email" name="email" id="email" placeholder="hisaju_love@runteq.com" class="w-full px-4 py-3 rounded-md border border-black rounded dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600">
+                <label for="email" class="block">メールアドレス</label>
+                <input type="email" name="email" id="email" placeholder="hisaju_love@runteq.com" class="w-full px-4 py-3 rounded-md border border-black focus:border-violet-600">
             </div>
             <div class="space-y-1 text-sm">
-                <label for="password" class="block dark:text-gray-600">パスワード</label>
-                <input type="password" name="password" id="password" placeholder="Password" class="w-full px-4 py-3 rounded-md border border-black rounded dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600">
-                <div class="flex justify-between text-base dark:text-gray-600">
+                <label for="password" class="block">パスワード</label>
+                <input type="password" name="password" id="password" placeholder="Password" class="w-full px-4 py-3 rounded-md border border-black focus:border-violet-600">
+                <div class="flex justify-between text-base">
                     <%= link_to 'パスワードを忘れた方', '#', rel: 'noopener noreferrer' %>
                     <%= link_to '登録ページへ', new_user_path, rel: 'noopener noreferrer' %>
                 </div>
             </div>
-            <button type="submit" class="block w-full p-3 text-center rounded-sm border border-black dark:text-gray-50 dark:bg-violet-600">
+            <button type="submit" class="block w-full p-3 text-center rounded-sm border border-black text-white bg-violet-600">
                 Sign in
             </button>
         </form>
-    <div class="flex items-center pt-4 space-x-1">
-            <div class="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
-            <p class="px-3 text-sm dark:text-gray-600">Login with social accounts</p>
-            <div class="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
+        <div class="flex items-center pt-4 space-x-1">
+            <div class="flex-1 h-px sm:w-16 bg-gray-300"></div>
+            <p class="px-3 text-sm">Login with social accounts</p>
+            <div class="flex-1 h-px sm:w-16 bg-gray-300"></div>
         </div>
         <div class="flex justify-center space-x-4">
             <button aria-label="Log in with Google" class="p-3 rounded-sm">
@@ -41,9 +41,9 @@
                 </svg>
             </button>
         </div>
-        <p class="text-xs text-center sm:px-6 dark:text-gray-600">
+        <p class="text-xs text-center sm:px-6">
           Don't have an account?
-          <%= link_to 'sign up', '#',  class: "underline dark:text-gray-800" %>
+          <%= link_to 'sign up', '#',  class: "underline" %>
         </p>
     </div>
 </div>

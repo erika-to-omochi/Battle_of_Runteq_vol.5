@@ -1,8 +1,9 @@
 class BoardsController < ApplicationController
   skip_before_action :require_login, only: [:index, :new, :create, :show]
-  def index
-    @boards = Board.includes(:user).all.order(created_at: :desc)
+  before_action :set_board, only: %i[edit update destroy]
 
+  def index
+    @boards = Board.all.includes([:user, :bookmarks]).order(created_at: :desc)
   end
 
   def new
@@ -46,7 +47,19 @@ class BoardsController < ApplicationController
     redirect_to boards_path, notice: '削除しました⭐'
   end
 
+  def bookmarks
+    @bookmark_board = current_user.bookmark_boards.includes(:user).order(created_at: :desc)
+  end
+
   private
+
+  def set_board
+    @board = current_user.boards.find(params[:id])
+  end
+
+  def render_not_found
+    render file: Rails.public_path.join('404.html'), status: :not_found
+  end
 
   def board_params
     params.require(:board).permit(:title, :body, :board_image, :board_image_cache, :discription)

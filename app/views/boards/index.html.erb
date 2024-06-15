@@ -1,23 +1,21 @@
 <% content_for(:title, "投稿一覧") %>
-<div class="container pt-3">
-  <div class="row">
-    <div class="col-lg-10 offset-lg-1">
+<div class="container mx-auto pt-3">
+  <div class="flex justify-center">
+    <div class="w-full max-w-4xl">
       <!-- 検索フォーム -->
       <form>
-      <div class="input-group mb-3">
-          <div class="input-group-prepend">
-          <input type="submit" value="検索" class="btn btn-primary"/>
-         </div>
-          <input class="form-control" placeholder="検索ワード" type="search"/>
-      </div>
+        <div class="flex mb-5 mt-5 w-80">
+          <button type="submit" class="bg-red-300 text-white px-4 py-2 rounded-l">検索</button>
+          <input class="flex-grow p-2 border border-gray-300 rounded-r" placeholder="検索ワード" type="search"/>
+        </div>
       </form>
     </div>
   </div>
 
   <!-- 掲示板一覧 -->
-  <div class="row">
-    <div class="col-12">
-      <div class="row">
+  <div class="flex justify-center">
+    <div class="w-full max-w-4xl">
+      <div>
         <% if @boards.present? %>
           <%= render @boards %>
         <% else %>

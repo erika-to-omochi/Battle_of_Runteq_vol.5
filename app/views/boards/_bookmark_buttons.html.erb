@@ -1,0 +1,7 @@
+<div class="ml-auto p-4">
+  <% if current_user.bookmark?(board) %>
+    <%= render 'unbookmark', { board: board } %>
+  <% else %>
+    <%= render 'bookmark', { board: board } %>
+  <% end %>
+</div>

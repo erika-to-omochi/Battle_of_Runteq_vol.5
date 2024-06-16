@@ -1,6 +1,6 @@
 <div class="ml-auto p-4">
   <% if current_user.bookmark?(board) %>
-    <%= render 'unbookmark', { board: board } %>
+    <%= render 'unbookmark', { board: board, bookmark: current_user.bookmarks.find_by(board_id: board.id) } %>
   <% else %>
     <%= render 'bookmark', { board: board } %>
   <% end %>

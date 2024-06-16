@@ -1,8 +1,4 @@
 class BookmarksController < ApplicationController
-  before_action :require_login
-  def index
-    @bookmark_boards = current_user.bookmark_boards.includes(:user)
-  end
 
   def create
     board = Board.find(params[:board_id])

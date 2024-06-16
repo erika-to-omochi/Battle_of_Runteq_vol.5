@@ -13,7 +13,7 @@
       <div class="flex items-center mb-1">
         <h2 class="text-xl font-semibold">
 	      <%= link_to board.title, board_path(board.id) %>
-		</h2>
+		</h2>ss
 		<% if current_user.own?(board) %>
 		  <div class="flex space-x-2 mr-2">
     		<%= link_to board_path(board), method: :delete, data: { confirm: '本当に削除しますか？' } do %>

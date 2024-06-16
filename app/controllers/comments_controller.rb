@@ -1,10 +1,18 @@
 class CommentsController < ApplicationController
   def create
-    comment = current_user.comments.build(comment_params)
-    if comment.save
-      redirect_to board_path(comment.board_id), notice: 'コメントしました'
+    @board = Board.find(params[:board_id])
+    @comment = current_user.comments.build(comment_params)
+    if @comment.save
+      @comments = @board.comments
+      respond_to do |format|
+        format.html { redirect_to @board, notice: 'コメントが追加されました。' }
+        format.turbo_stream
+      end
     else
-      redirect_to board_path(comment.board_id), notice: 'コメントできませんでした'
+      respond_to do |format|
+        format.html { render :new }
+        format.turbo_stream
+      end
     end
   end
 
@@ -12,6 +20,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = current_user.comments.find(params[:id])
+    @comment.destroy!
   end
 
   def index

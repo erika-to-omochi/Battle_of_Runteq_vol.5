@@ -24,7 +24,7 @@
       init: function(options) {
         this.superInit(options);
         // 制限時間（秒）
-        this.timeLimit = 10;
+        this.timeLimit = 15;
 
         this.bg = Background().addChildTo(this);
 
@@ -47,7 +47,7 @@
         this.timeLabel.y = this.gridY.span(1);
 
         // 敵生成間隔
-        this.enemyInterval = 15; // 初期間隔（フレーム数）
+        this.enemyInterval = 1; // 初期間隔（フレーム数）
         this.enemyTimer = 0; // タイマー初期化
 
         // クリックまたはタッチイベントリスナーを追加

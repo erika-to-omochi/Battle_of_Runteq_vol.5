@@ -1,23 +1,31 @@
 Rails.application.routes.draw do
-  get 'bookmarks/create'
-  get 'bookmarks/destroy'
-  get 'bookmarks/index'
-  get 'bookmarks/cd'
-  get 'phina/js'
-  get 'build/phina.js', to: 'phina#js'
-  get 'games/shooting'
+  # Static Pages
+  root 'static_pages#top'
+
+  # User Sessions
+  get 'login', to: 'user_sessions#new'
+  post 'login', to: 'user_sessions#create'
+  delete 'logout', to: 'user_sessions#destroy'
+
+  # Users
   resources :users, only: %i[index new create]
-  resources :boards, only: %i[index new create show edit update destroy] do
-    resources :comments, only: %i[create new show edit destroy update index], shallow: true
+
+  # Boards and Comments
+  resources :boards do
+    resources :comments, shallow: true
     collection do
       get :bookmarks
     end
   end
 
-  resources :bookmarks, only: %i[create destroy]
+  # Bookmarks
+  resources :bookmarks, only: %i[create destroy index]
 
-  root "static_pages#top"
-  get 'login', to: 'user_sessions#new'
-  post 'login', to: 'user_sessions#create'
-  delete 'logout', to: 'user_sessions#destroy'
+  # Games
+  get 'games/shooting'
+  get 'games/prologue', to: 'games#prologue'
+
+  # Phina.js
+  get 'phina/js', to: 'phina#js'
+  get 'build/phina.js', to: 'phina#js'
 end

@@ -3,7 +3,7 @@
 	<div class="flex space-x-4">
 		<div class="object-cover w-12 h-12 rounded-full shadow dark:bg-gray-500"></div>
 		<div class="flex flex-col space-y-1">
-			<a rel="noopener noreferrer" href="#" class="text-sm font-semibold"><%= current_user.decorate.full_name %></a>
+			<a rel="noopener noreferrer" href="#" class="text-sm font-semibold"><%= board.user.decorate.full_name  %></a>
 			<span class="text-xs dark:text-gray-600"><%= board.created_at.strftime("%Y-%m-%d %H:%M") %></span>
 		</div>
 	</div>

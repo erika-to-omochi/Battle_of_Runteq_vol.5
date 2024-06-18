@@ -13,15 +13,13 @@
   </div>
 
   <!-- 掲示板一覧 -->
-  <div class="flex justify-center">
-    <div class="w-full max-w-4xl">
-      <div>
-        <% if @boards.present? %>
-          <%= render @boards %>
-        <% else %>
-          <div class="mb-3">掲示板がありません</div>
-        <% end %>
-      </div>
+  <div class="flex flex-wrap justify-center">
+    <div class="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <% if @boards.present? %>
+        <%= render @boards %>
+      <% else %>
+        <div class="mb-3">掲示板がありません</div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -17,10 +17,10 @@
       <%= render 'shared/before_login_header' %>
     <% end %>
     <%= render 'shared/flash_message' %>
+    <% if @use_phina_js %>
+     <script src='https://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
+    <% end %>
     <%= yield %>
     <%= render 'shared/footer' %>
-    <% if @use_phina_js %>
-      <script src='https://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
-    <% end %>
   </body>
 </html>

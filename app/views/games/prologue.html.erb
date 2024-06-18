@@ -1,186 +1,157 @@
 <% content_for(:title, "プロローグ") %>
-<style>
-canvas {
-  box-shadow: 0px 0px 4px 0px #aaa;
-}
-body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-      header, footer {
-        flex-shrink: 0;
-      }
-      main {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 100px; /* ヘッダーの高さ分だけ下げる */
-        margin-bottom: 50px; /* フッターの高さ分だけ下げる */
-      }
-</style>
+
 <script>
-phina.globalize()
-var SCREEN_WIDTH    = 640;
-var SCREEN_HEIGHT   = 960;
-var ASSETS = {
-  image: {
-    bg: "<%= asset_path 'shooting/girl.png' %>",
-    player: "<%= asset_path 'shooting/angel.png' %>",
-    enemy: "<%= asset_path 'shooting/hanakuso.png' %>",
-    bullet: "<%= asset_path 'shooting/heart.png' %>",
-  },
-};
+  phina.globalize();
+  var SCREEN_WIDTH = 640;
+  var SCREEN_HEIGHT = 960;
+  var ASSETS = {
+    image: {
+      bg: "<%= asset_path 'shooting/girl.png' %>",
+      player: "<%= asset_path 'shooting/angel.png' %>",
+      enemy: "<%= asset_path 'shooting/hanakuso.png' %>",
+      bullet: "<%= asset_path 'shooting/heart.png' %>",
+    },
+  };
 
-// テキストデータ
-const MAINNTEXTS = [
-  "わたしのアホ〜!!",
-  "これはわたしの体験した恥ずかし話です（脚色あり）",
-  "その日、わたしは初めて\n彼氏のお家でお泊りデートでした。",
-  "ピピピピッピピピッ",
-  "彼の前ではできるだけ可愛くいたいので、\n彼より先に起きて身支度を整えました。",
-  "髪の毛を整えメイクをしたので、\nーよし、準備OKー\n彼を起こしました。",
-  "ーおはようー\nと彼が私を見てほほえみ、\nーあれ、頭に何かついてるー",
-  "彼の手が私の髪の毛に触れました。",
-  "彼は私の頭についていたものを\n手に取ったのち、しばらく固まり",
-  "――鼻くそ〜〜〜〜！！！！",
-  "と驚きました",
-  "もしかしたら、あなたの頭にも\n鼻くそが降ってくるかもしれません。",
-  "その時に備えて、今から鼻くそをシューティングしてみましょう！"
-];
+  // テキストデータ
+  const MAINNTEXTS = [
+    "わたしのアホ〜!!",
+    "これはわたしの体験した恥ずかし話です（脚色あり）",
+    "その日、わたしは初めて\n彼氏のお家でお泊りデートでした。",
+    "ピピピピッピピピッ",
+    "彼の前ではできるだけ可愛くいたいので、\n彼より先に起きて身支度を整えました。",
+    "髪の毛を整えメイクをしたので、\nーよし、準備OKー\n彼を起こしました。",
+    "ーおはようー\nと彼が私を見てほほえみ、\nーあれ、頭に何かついてるー",
+    "彼の手が私の髪の毛に触れました。",
+    "彼は私の頭についていたものを\n手に取ったのち、しばらく固まり",
+    "――鼻くそ〜〜〜〜！！！！",
+    "と驚きました",
+    "もしかしたら、あなたの頭にも\n鼻くそが降ってくるかもしれません。",
+    "その時に備えて、今から鼻くそをシューティングしてみましょう！"
+  ];
 
-phina.define("LabelRect", {
-  superClass: "RectangleShape",
-  init: function () {
-    this.superInit({
-      cornerRadius: 5,
-      width: 630,
-      height: 280,
-      stroke: "white",
-      fill: "#eee"
-    });
-    this.alpha = 0.8;
+  phina.define("LabelRect", {
+    superClass: "RectangleShape",
+    init: function () {
+      this.superInit({
+        cornerRadius: 5,
+        width: 630,
+        height: 280,
+        stroke: "white",
+        fill: "#eee"
+      });
+      this.alpha = 0.8;
 
-    // テキスト表示用LabelAreaクラス
-    this.labelArea = LabelArea({
-      text: "",
-      width: 600,
-      height: 240,
-      fontSize: 24 // 適切なフォントサイズに変更
-    }).addChildTo(this);
+      this.labelArea = LabelArea({
+        text: "",
+        width: 600,
+        height: 240,
+        fontSize: 24
+      }).addChildTo(this);
 
-    this.texts = [];
-    this.textIndex = 0;
-    this.charIndex = 0;
+      this.texts = [];
+      this.textIndex = 0;
+      this.charIndex = 0;
 
-    // 次のテキスト合図の▽
-    this.nextTriangle = TriangleShape({
-      fill: "black",
-      stroke: false,
-      radius: 12 // 適切なサイズに変更
-    }).addChildTo(this)
-      .setPosition(280, 100);
-    this.nextTriangle.rotation = 180;
-    this.nextTriangle.hide();
-  },
-  showAllText: function () {
-    let text = this.texts[this.textIndex];
-    this.labelArea.text = text;
-    this.textAll = true;
-    this.charIndex = text.length;
-  },
-  clearText: function () {
-    this.labelArea.text = "";
-  },
-  nextText: function () {
-    this.clearText();
-    ++this.textIndex;
-    this.charIndex = 0;
-    this.addChar();
-  },
-  addChar: function () {
-    if (this.texts[this.textIndex]) {
-      this.labelArea.text += this.getChar();
-    }
-  },
-  getChar: function () {
-    let text = this.texts[this.textIndex];
-    if (text.length <= this.charIndex) {
+      this.nextTriangle = TriangleShape({
+        fill: "black",
+        stroke: false,
+        radius: 12
+      }).addChildTo(this)
+        .setPosition(280, 100);
+      this.nextTriangle.rotation = 180;
+      this.nextTriangle.hide();
+    },
+    showAllText: function () {
+      let text = this.texts[this.textIndex];
+      this.labelArea.text = text;
       this.textAll = true;
-      return "";
-    } else {
-      this.textAll = false;
-      return text[this.charIndex++];
-    }
-  }
-});
-
-// メインシーン
-phina.define("MainScene", {
-  superClass: "DisplayScene",
-  init: function () {
-    this.superInit();
-
-    // 背景色
-    this.backgroundColor = "black";
-
-    // 背景用グループ
-    this.backImageGroup = DisplayElement().addChildTo(this);
-
-    // テキストエリアの矩形
-    this.labelRect = LabelRect().addChildTo(this)
-      .setPosition(this.gridX.center(), this.gridY.center(5.5));
-
-    this.labelRect.texts = MAINNTEXTS;
-    this.labelRect.textIndex = 0;
-    this.labelRect.charIndex = 0;
-
-    this.setPhase();
-  },
-  setPhase: function() {
-    // 背景の変更やその他の設定をここに追加
-  },
-  // 更新
-  update: function (app) {
-    // クリックかEnterキーの入力があった場合
-    if (app.pointer.getPointingStart() || app.keyboard.getKeyDown("enter")) {
-      if (this.labelRect.textAll) { // テキスト全部表示済み
-        this.labelRect.nextText();
-        // 次の背景に切替
-        this.setPhase();
-      } else {
-        this.labelRect.showAllText();
+      this.charIndex = text.length;
+    },
+    clearText: function () {
+      this.labelArea.text = "";
+    },
+    nextText: function () {
+      this.clearText();
+      ++this.textIndex;
+      this.charIndex = 0;
+      this.addChar();
+    },
+    addChar: function () {
+      if (this.texts[this.textIndex]) {
+        this.labelArea.text += this.getChar();
       }
-    } else {
-      this.labelRect.addChar();
+    },
+    getChar: function () {
+      let text = this.texts[this.textIndex];
+      if (text.length <= this.charIndex) {
+        this.textAll = true;
+        return "";
+      } else {
+        this.textAll = false;
+        return text[this.charIndex++];
+      }
+    },
+    isAllTextDisplayed: function() {
+      return this.textIndex >= this.texts.length;
     }
-
-    if (this.labelRect.textAll) {
-      this.labelRect.nextTriangle.show();
-    } else {
-      this.labelRect.nextTriangle.hide();
-    }
-  }
-});
-
-// メイン処理
-phina.main(function() {
-  const app = GameApp({
-    startLabel: location.search.substr(1).toObject().scene || 'title',
-    title: '頭についている\n〇〇〇に注意⚠',
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    assets: ASSETS,
-    backgroundColor: '#444',
-    autoPause: true,
   });
 
-  app.enableStats();
+  phina.define("MainScene", {
+    superClass: "DisplayScene",
+    init: function () {
+      this.superInit();
+      this.backgroundColor = "black";
+      this.backImageGroup = DisplayElement().addChildTo(this);
+      this.labelRect = LabelRect().addChildTo(this)
+        .setPosition(this.gridX.center(), this.gridY.center(5.5));
+      this.labelRect.texts = MAINNTEXTS;
+      this.labelRect.textIndex = 0;
+      this.labelRect.charIndex = 0;
+      this.setPhase();
+    },
+    setPhase: function() {
+    },
+    update: function (app) {
+      if (app.pointer.getPointingStart() || app.keyboard.getKeyDown("enter")) {
+        if (this.labelRect.textAll) {
+          this.labelRect.nextText();
+          this.setPhase();
+        } else {
+          this.labelRect.showAllText();
+        }
+      } else {
+        this.labelRect.addChar();
+      }
 
-  app.run();
-});
+      if (this.labelRect.textAll) {
+        this.labelRect.nextTriangle.show();
+      } else {
+        this.labelRect.nextTriangle.hide();
+      }
 
-  </script>
+      if (this.labelRect.isAllTextDisplayed()) {
+        // ここで特定のページに遷移する
+        window.location.href = "/games/shooting"; // 遷移先のURLに変更
+      }
+    }
+  });
+
+  phina.main(function() {
+    const app = GameApp({
+      startLabel: location.search.substr(1).toObject().scene || 'title',
+      title: '頭についている\n〇〇〇に注意⚠',
+      width: SCREEN_WIDTH,
+      height: SCREEN_HEIGHT,
+      assets: ASSETS,
+      backgroundColor: '#444',
+      autoPause: true,
+    });
+
+    app.enableStats();
+
+    app.run();
+  });
+
+</script>
+

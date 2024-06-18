@@ -9,15 +9,14 @@
             </div>
             <div class="space-y-1 text-sm">
                 <label for="password" class="block">パスワード</label>
-                <input type="password" name="password" id="password" placeholder="Password" class="w-full px-4 py-3 rounded-md border gray-300 focus:border-violet-600" autocomplete="current-password">
-                <div class="flex justify-between text-base">
-                    <%= link_to 'パスワードを忘れた方', '#', rel: 'noopener noreferrer' %>
-                    <%= link_to '登録ページへ', new_user_path, rel: 'noopener noreferrer' %>
-                </div>
+                <input type="password" name="password" id="password" placeholder="Password" class="w-full px-4 py-3 rounded-md border gray-300 focus:border-violet-600">
             </div>
-            <button type="submit" class="block w-full p-3 text-center rounded-sm border gray-300 text-black bg-white">
-                Sign in
-            </button>
+            <div class="flex justify-center space-x-4">
+                <button type="submit" class="px-4 py-2 text-center rounded-sm border gray-300 text-black bg-white">
+                    Sign in
+                </button>
+                <%= link_to '登録ページへ', new_user_path, class: 'px-4 py-2 border border-gray-300 rounded-md text-center' %>
+            </div>
         </form>
     </div>
 </div>

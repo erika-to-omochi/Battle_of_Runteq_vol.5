@@ -13,11 +13,11 @@
           <%= link_to '#', class: 'relative font-bold text-white group p-3', id: 'header-board-menu' do %>
             <span class="absolute inset-0 w-full h-full transition duration-300 ease-out transform -translate-x-2 -translate-y-2 bg-red-300 group-hover:translate-x-0 group-hover:translate-y-0"></span>
             <span class="absolute inset-0 w-full h-full text-white border border-white p-2.5 mr-5 rounded focus:ring-4 focus:ring-red-100"></span>
-            <span class="relative">掲示板</span>
+            <span class="relative">恥ずかし話</span>
           <% end %>
           <div class="absolute right-0 hidden mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg group-hover:block z-10">
-            <%= link_to '掲示板一覧', boards_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
-            <%= link_to '掲示板作成', new_board_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+            <%= link_to 'みんなの恥ずかし話を見てみる', boards_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+            <%= link_to '自分の恥ずかし話を投稿しちゃう！', new_board_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
           </div>
         </li>
         <li class="relative group px-2 py-2 mt-2">

@@ -1,241 +1,235 @@
 <% content_for(:title, "鼻くそシューティング") %>
-<!doctype html>
-
-<html>
-  <head>
-    <meta charset='utf-8' />
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Shooting | phina.js</title>
-    <script src='https://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js'></script>
-  </head>
-  <body>
-  </body>
-</html>
-
-<style>
-canvas {
-  box-shadow: 0px 0px 4px 0px #aaa;
-}
-</style>
-<script>
-
-phina.globalize();
-
-var SCREEN_WIDTH    = 640;
-var SCREEN_HEIGHT   = 960;
-var ASSETS = {
-  image: {
-    bg: "<%= asset_path 'shooting/girl.png' %>",
-    player: "<%= asset_path 'shooting/angel.png' %>",
-    enemy: "<%= asset_path 'shooting/hanakuso.png' %>",
-    bullet: "<%= asset_path 'shooting/heart.png' %>",
-  },
-};
-
-phina.define("MainScene", {
-  superClass: 'DisplayScene',
-
-  init: function(options) {
-    this.superInit(options);
-    // 制限時間（秒）
-    this.timeLimit = 15;
-
-    this.bg = Background().addChildTo(this);
-
-    this.player = Player().addChildTo(this);
-    this.player.setPosition(this.gridX.center(), this.gridY.span(14));
-
-    this.bulletGroup = DisplayElement().addChildTo(this);
-    this.enemyGroup = DisplayElement().addChildTo(this);
-
-    this.scoreLabel = Label().addChildTo(this);
-    this.scoreLabel.align = 'right';
-    this.scoreLabel.fill = 'white';
-    this.scoreLabel.x = this.gridX.span(15);
-    this.scoreLabel.y = this.gridY.span(1);
-    this.score = 0;
-    // 残り時間表示用のラベル
-    this.timeLabel = Label("Time: " + this.timeLimit).addChildTo(this);
-    this.timeLabel.fill = 'white';
-    this.timeLabel.x = this.gridX.center();
-    this.timeLabel.y = this.gridY.span(1);
-
-
-    // クリックまたはタッチイベントリスナーを追加
-    this.on('pointstart', function() {
-      var b = Bullet().addChildTo(this.bulletGroup);
-      b.x = this.player.x;
-      b.y = this.player.y;
-    });
-  },
-
-  update: function(app) {
-    var self = this;
-    var p = app.pointer;
-    if (p.getPointing()) {
-      this.player.x += p.dx;
-      this.player.y += p.dy;
+<body>
+  <style>
+    canvas {
+      box-shadow: 0px 0px 4px 0px #aaa;
     }
+  </style>
+  <script>
+    phina.globalize();
+    var SCREEN_WIDTH = 640;
+    var SCREEN_HEIGHT = 960;
+    var ASSETS = {
+      image: {
+        bg: "<%= asset_path 'shooting/girl.png' %>",
+        player: "<%= asset_path 'shooting/angel.png' %>",
+        enemy: "<%= asset_path 'shooting/hanakuso.png' %>",
+        bullet: "<%= asset_path 'shooting/heart.png' %>",
+      },
+    };
 
-    // 残り時間を更新
-    this.timeLimit -= app.deltaTime / 1000; // deltaTime をミリ秒から秒に変換
-    this.timeLabel.text = "Time: " + Math.max(this.timeLimit.toFixed(1), 0); // 残り時間を表示
-    // 制限時間が経過した場合はゲームオーバー
-    if (this.timeLimit <= 0) {
-      this.gameover();
-    }
+    phina.define("MainScene", {
+      superClass: 'DisplayScene',
 
-    if (app.frame % 30 === 0) {
-      var e = Enemy(this.enemyBulletGroup).addChildTo(this.enemyGroup);
-      e.x = Random.randint(50, this.gridX.width-100);
-      e.y = -50;
-    }
+      init: function(options) {
+        this.superInit(options);
+        // 制限時間（秒）
+        this.timeLimit = 15;
 
-    var bullets = this.bulletGroup.children;
-    var enemies = this.enemyGroup.children;
+        this.bg = Background().addChildTo(this);
 
-    // bullet and enemy
-    bullets.each(function(bullet) {
-      enemies.some(function(enemy) {
-        if (bullet.hitTestElement(enemy)) {
-          bullet.remove();
-          enemy.remove();
-          self.score += 10;
-          return true;
+        this.player = Player().addChildTo(this);
+        this.player.setPosition(this.gridX.center(), this.gridY.span(14));
+
+        this.bulletGroup = DisplayElement().addChildTo(this);
+        this.enemyGroup = DisplayElement().addChildTo(this);
+
+        this.scoreLabel = Label().addChildTo(this);
+        this.scoreLabel.align = 'right';
+        this.scoreLabel.fill = 'white';
+        this.scoreLabel.x = this.gridX.span(15);
+        this.scoreLabel.y = this.gridY.span(1);
+        this.score = 0;
+        // 残り時間表示用のラベル
+        this.timeLabel = Label("Time: " + this.timeLimit).addChildTo(this);
+        this.timeLabel.fill = 'white';
+        this.timeLabel.x = this.gridX.center();
+        this.timeLabel.y = this.gridY.span(1);
+
+        // 敵生成間隔
+        this.enemyInterval = 1; // 初期間隔（フレーム数）
+        this.enemyTimer = 0; // タイマー初期化
+
+        // クリックまたはタッチイベントリスナーを追加
+        this.on('pointstart', function() {
+          var b = Bullet().addChildTo(this.bulletGroup);
+          b.x = this.player.x;
+          b.y = this.player.y;
+        });
+      },
+
+      update: function(app) {
+        var self = this;
+        var p = app.pointer;
+
+        // プレイヤーをマウスカーソルに追従させる
+        this.player.x = p.x;
+        this.player.y = p.y;
+
+        // 残り時間を更新
+        this.timeLimit -= app.deltaTime / 1000; // deltaTime をミリ秒から秒に変換
+        this.timeLabel.text = "Time: " + Math.max(this.timeLimit.toFixed(1), 0); // 残り時間を表示
+        // 制限時間が経過した場合はゲームオーバー
+        if (this.timeLimit <= 0) {
+          this.gameover();
         }
-      });
-    });
 
-    // enemy and player
-    enemies.some(function(enemy) {
-      if (self.player.hitTestElement(enemy)) {
-        self.gameover();
+        // 敵生成間隔を段階的に短くする
+        var elapsedTime = 15 - this.timeLimit; // 経過時間（秒）
+        this.enemyInterval = Math.max(5, 20 - Math.floor(elapsedTime / 1.5)); // 最短間隔を5フレームとする
+
+        // 敵生成タイマーを更新
+        this.enemyTimer++;
+        if (this.enemyTimer >= this.enemyInterval) {
+          this.enemyTimer = 0;
+          var e = Enemy(this.enemyBulletGroup).addChildTo(this.enemyGroup);
+          e.x = Random.randint(50, this.gridX.width - 100);
+          e.y = -50;
+        }
+
+        var bullets = this.bulletGroup.children;
+        var enemies = this.enemyGroup.children;
+
+        // bullet and enemy
+        bullets.each(function(bullet) {
+          enemies.some(function(enemy) {
+            if (bullet.hitTestElement(enemy)) {
+              bullet.remove();
+              enemy.remove();
+              self.score += 10;
+              return true;
+            }
+          });
+        });
+
+        // enemy and player
+        enemies.some(function(enemy) {
+          if (self.player.hitTestElement(enemy)) {
+            self.gameover();
+          }
+        });
+      },
+
+      gameclear: function() {
+        // add clear bonus
+        var bonus = 2000;
+        this.score += bonus;
+
+        // add time bonus
+        var seconds = (60 - this.timeLimit).floor(); // 残り時間から経過時間を算出
+        var bonusTime = Math.max(60 * 10 - seconds, 0);
+        this.score += (bonusTime * 10);
+
+        this.gameover();
+      },
+
+      gameover: function() {
+        this.exit({
+          score: this.score,
+        });
+      },
+
+      _accessor: {
+        score: {
+          get: function() {
+            return this._score;
+          },
+          set: function(v) {
+            this._score = v;
+            this.scoreLabel.text = v;
+          },
+        },
       }
+
     });
-  },
 
-  gameclear: function() {
-    // add clear bonus
-    var bonus = 2000;
-    this.score += bonus;
+    /*
+     * バックグラウンド
+     * 背景は固定
+     */
+    phina.define('Background', {
+      superClass: 'DisplayElement',
 
-    // add time bonus
-    var seconds = (60 - this.timeLimit).floor(); // 残り時間から経過時間を算出
-    var bonusTime = Math.max(60*10-seconds, 0);
-    this.score += (bonusTime*10);
+      init: function() {
+        this.superInit();
+        // 背景画像のサイズを画面のサイズに合わせる
+        var screenWidth = SCREEN_WIDTH;
+        var screenHeight = SCREEN_HEIGHT;
 
-    this.gameover();
-  },
-
-  gameover: function() {
-    this.exit({
-      score: this.score,
+        // 背景画像を生成し、サイズを設定
+        this.bg0 = Sprite('bg').addChildTo(this);
+        this.bg0.setSize(screenWidth, screenHeight);
+        this.bg0.setOrigin(0, 0);
+      },
     });
-  },
 
-  _accessor: {
-    score: {
-      get: function() {
-        return this._score;
+    /*
+     * プレイヤー
+     */
+    phina.define('Player', {
+      superClass: 'Sprite',
+
+      init: function() {
+        this.superInit('player', 206, 202);
+
+        this.boundingType = 'circle';
+
+        this.frameIndex = 0;
       },
-      set: function(v) {
-        this._score = v;
-        this.scoreLabel.text = v;
+    });
+
+    /*
+     * 弾
+     */
+    phina.define('Bullet', {
+      superClass: 'Sprite',
+
+      init: function() {
+        this.superInit('bullet', 70, 70);
       },
-    },
-  }
 
-});
+      update: function() {
+        this.y -= 32;
 
-/*
- * バックグラウンド
- * 背景は固定
- */
-phina.define('Background', {
-  superClass: 'DisplayElement',
+        if (this.y < -20) {
+          this.remove();
+        }
+      },
+    });
 
-  init: function() {
-    this.superInit();
-    // 背景画像のサイズを画面のサイズに合わせる
-    var screenWidth = SCREEN_WIDTH;
-    var screenHeight = SCREEN_HEIGHT;
+    /*
+     * 敵
+     */
+    phina.define('Enemy', {
+      superClass: 'Sprite',
 
-    // 背景画像を生成し、サイズを設定
-    this.bg0 = Sprite('bg').addChildTo(this);
-    this.bg0.setSize(screenWidth, screenHeight);
-    this.bg0.setOrigin(0, 0);
-  },
-});
+      init: function(bulletGroup) {
+        this.superInit('enemy');
+        this.setSize(100, 100);
+      },
 
-/*
- * プレイヤー
- */
-phina.define('Player', {
-  superClass: 'Sprite',
+      update: function() {
+        this.y += 4;
+        if (this.y > (SCREEN_HEIGHT + 100)) {
+          this.remove();
+        }
+      },
+    });
 
-  init: function() {
-    this.superInit('player', 206, 202);
+    phina.main(function() {
+      var app = GameApp({
+        startLabel: location.search.substr(1).toObject().scene || 'title',
+        title: 'Shooting',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+        assets: ASSETS,
+        backgroundColor: '#444',
+        autoPause: true,
+      });
 
-    this.boundingType = 'circle';
+      app.enableStats();
 
-    this.frameIndex = 0;
-  },
-});
-
-/*
- * 弾
- */
-phina.define('Bullet', {
-  superClass: 'Sprite',
-
-  init: function() {
-    this.superInit('bullet', 70, 70);
-  },
-
-  update: function() {
-    this.y -= 32;
-
-    if (this.y < -20) {
-      this.remove();
-    }
-  },
-});
-
-/*
- * 敵
- */
-phina.define('Enemy', {
-  superClass: 'Sprite',
-
-  init: function(bulletGroup) {
-    this.superInit('enemy');
-    this.setSize(100, 100); 
-  },
-
-  update: function() {
-    this.y += 4;
-    if (this.y > (SCREEN_HEIGHT+100)) {
-      this.remove();
-    }
-  },
-});
-
-phina.main(function() {
-  var app = GameApp({
-    startLabel: location.search.substr(1).toObject().scene || 'title',
-    title: 'Shooting',
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    assets: ASSETS,
-    backgroundColor: '#444',
-    autoPause: true,
-  });
-
-  app.enableStats();
-
-  app.run();
-});
-
-
-</script>
+      app.run();
+    });
+  </script>
+</body>

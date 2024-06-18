@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'phina/js'
   get 'build/phina.js', to: 'phina#js'
   get 'games/shooting'
+  get 'games/prologue'
   resources :users, only: %i[index new create]
   resources :boards, only: %i[index new create show edit update destroy] do
     resources :comments, only: %i[create new show edit destroy update index], shallow: true

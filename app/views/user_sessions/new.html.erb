@@ -1,22 +1,21 @@
 <% content_for(:title, "ログイン") %>
 <div class="flex justify-center items-center">
-    <div class="w-full max-w-md p-8 space-y-3 rounded-xl">
-        <h1 class="text-2xl font-bold text-center">ログイン</h1>
-        <form novalidate action="/login" method="POST" class="space-y-6">
-            <div class="space-y-1 text-sm">
-                <label for="email" class="block">メールアドレス</label>
-                <input type="email" name="email" id="email" placeholder="hisaju_love@runteq.com" class="w-full px-4 py-3 rounded-md border gray-300 focus:border-violet-600">
-            </div>
-            <div class="space-y-1 text-sm">
-                <label for="password" class="block">パスワード</label>
-                <input type="password" name="password" id="password" placeholder="Password" class="w-full px-4 py-3 rounded-md border gray-300 focus:border-violet-600">
-            </div>
-            <div class="flex justify-center space-x-4">
-                <button type="submit" class="px-4 py-2 text-center rounded-sm border gray-300 text-black bg-white">
-                    Sign in
-                </button>
-                <%= link_to '登録ページへ', new_user_path, class: 'px-4 py-2 border border-gray-300 rounded-md text-center' %>
-            </div>
-        </form>
-    </div>
+  <div class="w-full max-w-md p-8 space-y-3 rounded-xl">
+    <h1 class="text-2xl font-bold text-center">ログイン</h1>
+    <%= form_with url: login_path, local: true, method: :post, html: { class: "space-y-6" } do |form| %>
+      <div class="space-y-1 text-sm">
+        <%= form.label :email, "メールアドレス", class: "block" %>
+        <%= form.email_field :email, id: "email", placeholder: "hisaju_love@runteq.com", class: "w-full px-4 py-3 rounded-md border-gray-300 focus:border-violet-600" %>
+      </div>
+      <div class="space-y-1 text-sm">
+        <%= form.label :password, "パスワード", class: "block" %>
+        <%= form.password_field :password, id: "password", placeholder: "Password", class: "w-full px-4 py-3 rounded-md border-gray-300 focus:border-violet-600" %>
+      </div>
+      <div class="flex justify-center space-x-4">
+        <%= form.submit "Sign in", class: "px-4 py-2 text-center rounded-sm border-gray-300 text-black bg-white" %>
+        <%= link_to '登録ページへ', new_user_path, class: 'px-4 py-2 border border-gray-300 rounded-md text-center' %>
+      </div>
+    <% end %>
+  </div>
 </div>
+

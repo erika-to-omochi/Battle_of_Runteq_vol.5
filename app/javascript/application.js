@@ -1,6 +1,1 @@
-// Entry point for the build script in your package.json
-import Rails from "@rails/ujs";
-Rails.start()
-
-import "@hotwired/turbo-rails"
-import "./controllers"
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails

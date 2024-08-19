@@ -1,5 +1,9 @@
 <% content_for(:title, "鼻くそシューティング") %>
 <turbo-frame id="shooting-frame">
+
+<div id="game-root"></div>
+<%= javascript_importmap_tags %>
+
   <style>
     canvas {
       box-shadow: 0px 0px 4px 0px #aaa;

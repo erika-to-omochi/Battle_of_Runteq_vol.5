@@ -1,0 +1,13 @@
+<% content_for(:title, "ゲーム一覧") %>
+<div class="max-w-xs rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800 m-8">
+  <%= link_to games_prologue_path, class: "navbar-brand flex items-center" do %>
+    <%= image_tag 'shooting/angel.png',class:"object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500" %>
+	<% end %>
+  <div class="flex flex-col justify-between p-6 space-y-8">
+		<div class="space-y-2">
+    <%= link_to "<h2 class='text-2xl font-semibold tracking-wide hover:text-blue-500'>鼻くそシューティング</h2>".html_safe, games_prologue_path %>
+			<p class="dark:text-gray-800">鼻くそが振ってきたときに備えて、妖精になりきって鼻くそをシューティングするゲームです。</p>
+		</div>
+	</div>
+</div>
+

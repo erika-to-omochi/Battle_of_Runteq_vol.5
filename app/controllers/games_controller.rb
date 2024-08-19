@@ -1,6 +1,9 @@
 class GamesController < ApplicationController
-  skip_before_action :require_login, only: [:shooting, :prologue]
+  skip_before_action :require_login, only: [:shooting, :prologue, :index]
   before_action :set_phina_js, only: [:shooting, :prologue]
+
+  def index
+  end
 
   def shooting
   end
